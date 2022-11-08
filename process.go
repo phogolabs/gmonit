@@ -9,18 +9,18 @@ import (
 )
 
 // Interrupt interrupts a process
-func Interrupt(process *Process, intervals ...interface{}) {
+func Interrupt(process *Process) {
 	if process != nil {
 		process.Signal(os.Interrupt)
-		gomega.EventuallyWithOffset(1, process.Wait(), intervals...).Should(gomega.Receive(), "process interrupted because it failed to exit in time")
+		gomega.EventuallyWithOffset(1, process.Wait()).Should(gomega.Receive(), "process interrupted because it failed to exit in time")
 	}
 }
 
 // Kill kills a process
-func Kill(process *Process, intervals ...interface{}) {
+func Kill(process *Process) {
 	if process != nil {
 		process.Signal(os.Kill)
-		gomega.EventuallyWithOffset(1, process.Wait(), intervals...).Should(gomega.Receive(), "process killer because it failed to exit in time")
+		gomega.EventuallyWithOffset(1, process.Wait()).Should(gomega.Receive(), "process killer because it failed to exit in time")
 	}
 }
 
